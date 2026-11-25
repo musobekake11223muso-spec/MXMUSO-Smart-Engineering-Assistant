@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }} — MXMUSO</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<main style="margin-left:0">
+    <p class="creator">CREATED BY MXMUSO</p>
+    <a href="/" style="color:#43aaff">← Bosh sahifaga qaytish</a>
+
+    <header style="margin-top:25px">
+        <div>
+            <p class="eyebrow">MXMUSO HARDWARE DATABASE</p>
+            <h1>{{ title }}</h1>
+            <p class="muted">Kompyuter qurilmalari va ularning vazifalari.</p>
+        </div>
+        <div class="status">● CATALOG ONLINE</div>
+    </header>
+
+    <section class="catalog-tools">
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="Qurilma nomini qidiring..."
+            aria-label="Qurilma qidirish"
+        >
+
+        <select id="categorySelect" aria-label="Kategoriya tanlash">
+            <option value="all">Barcha kategoriyalar</option>
+            {% for item in items|unique(attribute='category') %}
+            <option value="{{ item.category }}">{{ item.category }}</option>
+            {% endfor %}
+        </select>
+    </section>
+
+    <p id="resultCount" class="muted">{{ items|length }} ta qurilma topildi</p>
+
+    <section class="cards" id="catalogGrid">
+        {% for item in items %}
+        <article class="card catalog-card"
+                 data-category="{{ item.category }}">
+            <span class="catalog-icon">{{ item.icon }}</span>
+            <h3>{{ item.name }}</h3>
+            <small>{{ item.category }}</small>
+            <p><strong>Vazifasi:</strong> {{ item.purpose }}</p>
+            <p><strong>Texnik xususiyatlari:</strong> {{ item.specs }}</p>
+        </article>
+        {% endfor %}
+    </section>
+
+    <p id="emptyMessage" class="muted" hidden>
+        Bu qidiruv bo‘yicha qurilma topilmadi.
+    </p>
+
+    <footer>© 2026 MXMUSO — ALL RIGHTS RESERVED</footer>
+</main>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const categorySelect = document.getElementById("categorySelect");
+const cards = [...document.querySelectorAll(".catalog-card")];
+const resultCount = document.getElementById("resultCount");
+const emptyMessage = document.getElementById("emptyMessage");
+
+function filterCatalog() {
+    const query = searchInput.value.toLowerCase().trim();
+    const category = categorySelect.value;
+    let visible = 0;
+
+    cards.forEach(card => {
+        const matchesText = card.textContent.toLowerCase().includes(query);
+        const matchesCategory =
+            category === "all" || card.dataset.category === category;
+
+        const show = matchesText && matchesCategory;
+        card.hidden = !show;
+
+        if (show) visible++;
+    });
+
+    resultCount.textContent = visible + " ta qurilma topildi";
+    emptyMessage.hidden = visible !== 0;
+}
+
+searchInput.addEventListener("input", filterCatalog);
+categorySelect.addEventListener("change", filterCatalog);
+</script>
+
+</body>
+</html>

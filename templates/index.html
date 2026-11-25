@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Engineering Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="intro-screen" id="intro">
+    <div class="intro-logo">
+        <div class="logo-symbol">⚡</div>
+        <h1>MXMUSO</h1>
+        <p>SMART ENGINEERING ASSISTANT</p>
+        <div class="loading-line"><span></span></div>
+        <small>CREATED BY MXMUSO · 2026</small>
+    </div>
+</div>
+
+
+<div class="sidebar">
+    <h2>⚡ MXMUSO</h2>
+    <p class="subtitle">ENGINEERING ASSISTANT</p>
+<p class="creator">CREATED BY MXMUSO</p>
+
+    <nav>
+        <a class="active" href="/">⌂ Bosh sahifa</a>
+        <a href="/module/catalog">▣ Kompyuter katalogi</a>
+        <a href="/module/converter">⇄ Sanoq konvertori</a>
+        <a href="/module/algorithms">⌘ Algoritmlar</a>
+        <a href="/module/systems">▤ Operatsion tizimlar</a>
+        <a href="/module/calculator">∑ Muhandislik kalkulyatori</a>
+        <a href="/module/learning">▧ O‘quv markazi</a>
+        <a href="/module/ai">✦ AI yordamchi</a>
+    </nav>
+
+    <div class="sidebar-bottom">© 2026 MXMUSO — ALL RIGHTS RESERVED</div>
+</div>
+
+<main>
+    <header>
+        <div>
+            <p class="eyebrow">ENGINEERING CONTROL CENTER</p>
+            <h1>Boshqaruv paneli</h1>
+            <p class="muted">Barcha muhandislik vositalari bir joyda.</p>
+        </div>
+        <div class="status">● SYSTEM ONLINE</div>
+    </header>
+
+    <section class="welcome">
+        <div>
+            <p>WELCOME TO THE FUTURE</p>
+            <h2>Aqlli muhandislik<br>yordamchisi</h2>
+            <span>Bilim. Texnologiya. Innovatsiya.</span>
+        </div>
+        <div class="welcome-icon">⚡</div>
+    </section>
+
+    <h2 class="section-title">Asosiy modullar</h2>
+
+    <section class="cards">
+        <a class="card" id="catalog" href="/module/catalog">
+            <span>▣</span>
+            <h3>Kompyuter katalogi</h3>
+            <p>Kompyuter qurilmalari va texnik xususiyatlari.</p>
+            <small>01 / HARDWARE</small>
+        </a>
+
+        <a class="card" id="converter" href="/module/converter">
+            <span>⇄</span>
+            <h3>Sanoq konvertori</h3>
+            <p>2, 8, 10 va 16 lik sanoq sistemalari.</p>
+            <small>02 / CONVERTER</small>
+        </a>
+
+        <a class="card" id="algorithms" href="/module/algorithms">
+            <span>⌘</span>
+            <h3>Algoritmlar</h3>
+            <p>Algoritm va blok-sxemalar laboratoriyasi.</p>
+            <small>03 / ALGORITHM</small>
+        </a>
+
+        <a class="card" id="systems" href="/module/systems">
+            <span>▤</span>
+            <h3>Operatsion tizimlar</h3>
+            <p>Windows, macOS va Linux taqqoslash.</p>
+            <small>04 / SYSTEMS</small>
+        </a>
+
+        <a class="card" id="calculator" href="/module/calculator">
+            <span>∑</span>
+            <h3>Muhandislik kalkulyatori</h3>
+            <p>Matematik va texnik hisob-kitoblar.</p>
+            <small>05 / CALCULATOR</small>
+        </a>
+
+        <a class="card" id="learning" href="/module/learning">
+            <span>▧</span>
+            <h3>O‘quv markazi</h3>
+            <p>Elektron qo‘llanmalar va bilimlar.</p>
+            <small>06 / EDUCATION</small>
+        </a>
+
+        <a class="card ai-card" id="ai" href="/module/ai">
+            <span>✦</span>
+            <h3>AI yordamchi</h3>
+            <p>Sun’iy intellekt asosidagi yordamchi.</p>
+            <small>07 / ARTIFICIAL INTELLIGENCE</small>
+        </a>
+    </section>
+
+    <footer>
+        SMART ENGINEERING ASSISTANT
+        <span>Developed for Computer Engineering</span>
+    </footer>
+</main>
+
+<script src="/static/js/script.js"></script>
+
+<script>
+window.addEventListener("load", function() {
+    setTimeout(function() {
+        const intro = document.getElementById("intro");
+        if (intro) {
+            intro.classList.add("intro-hidden");
+            setTimeout(() => intro.remove(), 800);
+        }
+    }, 1800);
+});
+</script>
+</body>
+</html>

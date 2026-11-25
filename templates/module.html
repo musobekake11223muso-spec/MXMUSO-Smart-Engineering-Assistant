@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }} — MXMUSO</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<main style="margin-left:0">
+    <p class="creator">CREATED BY MXMUSO</p>
+    <a href="/" class="back-link">← Bosh sahifaga qaytish</a>
+
+    <header style="margin-top:25px">
+        <div>
+            <p class="eyebrow">MXMUSO ENGINEERING PLATFORM</p>
+            <h1>{{ title }}</h1>
+            <p class="muted">Bilim. Texnologiya. Innovatsiya.</p>
+        </div>
+        <div class="status">● MODULE ONLINE</div>
+    </header>
+
+    {% if name == "catalog" %}
+    <h2 class="section-title">Qurilmalar katalogi</h2>
+    <section class="catalog-tools">
+        <input id="searchInput" type="search" placeholder="Qurilma qidirish...">
+        <select id="categorySelect">
+            <option value="all">Barcha kategoriyalar</option>
+            {% for category in items|map(attribute='category')|unique %}
+            <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
+    </section>
+    <p class="muted" id="resultCount"></p>
+    <section class="cards" id="catalogGrid">
+        {% for item in items %}
+        <article class="card catalog-card" data-category="{{ item.category }}">
+            <span class="catalog-icon">{{ item.icon }}</span>
+            <h3>{{ item.name }}</h3>
+            <small>{{ item.category }}</small>
+            <p><strong>Vazifasi:</strong> {{ item.purpose }}</p>
+            <p><strong>Texnik xususiyatlari:</strong> {{ item.specs }}</p>
+        </article>
+        {% endfor %}
+    </section>
+    <p id="emptyMessage" class="muted" hidden>Qurilma topilmadi.</p>
+
+    {% elif name == "converter" %}
+    <h2 class="section-title">Sanoq sistemalari konvertori</h2>
+    <div class="card tool-card">
+        <p class="muted">Katta va manfiy butun sonlar ham qo‘llab-quvvatlanadi.</p>
+        <label for="numberInput">Sonni kiriting</label>
+        <input id="numberInput" type="text" inputmode="text" autocomplete="off" placeholder="Masalan: 1010 yoki -FF">
+        <label for="fromBase">Boshlang‘ich sanoq sistemasi</label>
+        <select id="fromBase">
+            <option value="2">Ikkilik (2)</option>
+            <option value="8">Sakkizlik (8)</option>
+            <option value="10" selected>O‘nlik (10)</option>
+            <option value="16">O‘n oltilik (16)</option>
+        </select>
+        <button type="button" onclick="convertNumber()">Hisoblash</button>
+        <div class="base-results" aria-live="polite">
+            <div class="base-result-row"><strong>Ikkilik (2)</strong><code id="out2">—</code><button type="button" class="copy-button" onclick="copyBaseResult('out2')">Nusxalash</button></div>
+            <div class="base-result-row"><strong>Sakkizlik (8)</strong><code id="out8">—</code><button type="button" class="copy-button" onclick="copyBaseResult('out8')">Nusxalash</button></div>
+            <div class="base-result-row"><strong>O‘nlik (10)</strong><code id="out10">—</code><button type="button" class="copy-button" onclick="copyBaseResult('out10')">Nusxalash</button></div>
+            <div class="base-result-row"><strong>O‘n oltilik (16)</strong><code id="out16">—</code><button type="button" class="copy-button" onclick="copyBaseResult('out16')">Nusxalash</button></div>
+        </div>
+        <div id="convertMessage" class="result-area" aria-live="polite">Natijalar shu yerda chiqadi.</div>
+    </div>
+
+    {% elif name == "algorithms" %}
+    <h2 class="section-title">Algoritmlar laboratoriyasi</h2>
+    <div class="card tool-card">
+        <label for="algorithmInput">Sonlar ketma-ketligi</label>
+        <input id="algorithmInput" type="text" value="8, 3, 10, 1, 5">
+        <label for="algorithmType">Amalni tanlang</label>
+        <select id="algorithmType">
+            <option value="sort">Saralash (o‘sish tartibida)</option>
+            <option value="search">Sonni qidirish</option>
+        </select>
+        <input id="searchValue" type="number" placeholder="Qidiriladigan son">
+        <button type="button" onclick="runAlgorithm()">Algoritmni bajarish</button>
+        <div id="algorithmResult" class="result-area" aria-live="polite"></div>
+    </div>
+    <div class="card">
+        <h3>Python kodi — saralash</h3>
+        <pre><code>numbers = [8, 3, 10, 1, 5]
+numbers.sort()
+print(numbers)</code></pre>
+        <h3>Python kodi — qidirish</h3>
+        <pre><code>numbers = [8, 3, 10, 1, 5]
+target = 10
+
+if target in numbers:
+    print("Topildi")
+else:
+    print("Topilmadi")</code></pre>
+    </div>
+
+    {% elif name == "systems" %}
+    <h2 class="section-title">Operatsion tizimlarni taqqoslash</h2>
+    <section class="cards">
+        {% for os in systems %}
+        <article class="card">
+            <h3>{{ os.name }}</h3>
+            <p><strong>Ishlab chiquvchi:</strong> {{ os.maker }}</p>
+            <p><strong>Kod turi:</strong> {{ os.type }}</p>
+            <p><strong>Afzalliklari:</strong> {{ os.pros }}</p>
+            <p><strong>Cheklovlari:</strong> {{ os.cons }}</p>
+        </article>
+        {% endfor %}
+    </section>
+    <div class="card">
+        <h3>Qisqa xulosa</h3>
+        <p>Windows — keng dasturiy moslik, macOS — Apple ekotizimi, Linux — moslashuvchanlik va ochiq kod imkoniyatlari bilan ajralib turadi.</p>
+    </div>
+
+    {% elif name == "calculator" %}
+    <h2 class="section-title">Muhandislik kalkulyatori</h2>
+    <div class="card tool-card">
+        <label for="calcInput">Matematik ifoda</label>
+        <input id="calcInput" type="text" placeholder="Masalan: (25 + 5) * 2">
+        <p class="muted">Ruxsat etilgan amallar: +, -, *, /, %, ** va qavslar.</p>
+        <button type="button" onclick="calculate()">Hisoblash</button>
+        <button type="button" class="secondary-button" onclick="loadCalcHistory()">Hisoblash tarixini ko‘rish</button>
+        <div id="calcResult" class="result-area" aria-live="polite"></div>
+    </div>
+
+    {% elif name == "learning" %}
+    <h2 class="section-title">O‘quv darslari</h2>
+    <section class="cards">
+        {% for lesson in lessons %}
+        <article class="card">
+            <h3>{{ loop.index }}. {{ lesson.title }}</h3>
+            <p>{{ lesson.body }}</p>
+        </article>
+        {% endfor %}
+    </section>
+    <div class="card tool-card">
+        <h3>Bilimingizni tekshiring</h3>
+        <p>Kompyuter buyruqlarini bajaradigan asosiy qurilma qaysi?</p>
+        <select id="quizAnswer">
+            <option value="">Javobni tanlang</option>
+            <option value="ram">RAM</option>
+            <option value="cpu">CPU</option>
+            <option value="ssd">SSD</option>
+        </select>
+        <button type="button" onclick="checkQuiz()">Javobni tekshirish</button>
+        <div id="quizResult" class="result-area" aria-live="polite"></div>
+    </div>
+
+    {% elif name == "ai" %}
+    <h2 class="section-title">MXMUSO AI yordamchi</h2>
+    <div class="card tool-card mx-chat">
+        <div class="mx-chat-heading">
+            <div>
+                <h3>MXMUSO AI</h3>
+                <p class="muted">Muhandislik va dasturlash yordamchisi</p>
+            </div>
+            <button type="button" onclick="clearChatHistory()">Tarixni tozalash</button>
+        </div>
+        <div id="chatHistory" class="chat-history" aria-live="polite">
+            <p class="muted">Suhbat tarixi yuklanmoqda...</p>
+        </div>
+        <label for="aiQuestion">Xabaringiz</label>
+        <textarea id="aiQuestion" rows="3" placeholder="Savolingizni yozing..."></textarea>
+        <button type="button" id="sendAIButton" onclick="askAI()">Xabar yuborish</button>
+    </div>
+    {% endif %}
+
+    <footer>© 2026 MXMUSO — ALL RIGHTS RESERVED</footer>
+</main>
+
+<script>
+function showMessage(id, message) {
+    document.getElementById(id).textContent = message;
+}
+
+// Katalog qidiruvi
+const searchInput = document.getElementById("searchInput");
+if (searchInput) {
+    const categorySelect = document.getElementById("categorySelect");
+    const cards = [...document.querySelectorAll(".catalog-card")];
+
+    function filterCatalog() {
+        const query = searchInput.value.toLowerCase().trim();
+        const category = categorySelect.value;
+        let count = 0;
+
+        cards.forEach(card => {
+            const matchesText = card.textContent.toLowerCase().includes(query);
+            const matchesCategory =
+                category === "all" || card.dataset.category === category;
+            const visible = matchesText && matchesCategory;
+
+            card.hidden = !visible;
+            if (visible) count++;
+        });
+
+        showMessage("resultCount", count + " ta qurilma topildi");
+        document.getElementById("emptyMessage").hidden = count !== 0;
+    }
+
+    searchInput.addEventListener("input", filterCatalog);
+    categorySelect.addEventListener("change", filterCatalog);
+    filterCatalog();
+}
+
+// Katta sonlar bilan ishlaydigan sanoq sistemalari konvertori
+function convertNumber() {
+    const input = document.getElementById("numberInput").value.trim();
+    const base = Number(document.getElementById("fromBase").value);
+    const alphabet = "0123456789abcdef";
+    if (!input) {
+        showMessage("convertMessage", "Avval son kiriting.");
+        return;
+    }
+    const negative = input.startsWith("-");
+    const positive = input.startsWith("+");
+    const digits = (negative || positive) ? input.slice(1) : input;
+    if (!digits) {
+        showMessage("convertMessage", "Son raqamlarini kiriting.");
+        return;
+    }
+    let value = 0n;
+    for (const char of digits.toLowerCase()) {
+        const digit = alphabet.indexOf(char);
+        if (digit < 0 || digit >= base) {
+            showMessage("convertMessage", "Kiritilgan son tanlangan sanoq sistemasiga mos emas.");
+            return;
+        }
+        value = value * BigInt(base) + BigInt(digit);
+    }
+    if (negative) value = -value;
+    const magnitude = value < 0n ? -value : value;
+    const sign = value < 0n ? "-" : "";
+    const outputs = {
+        out2: sign + magnitude.toString(2),
+        out8: sign + magnitude.toString(8),
+        out10: sign + magnitude.toString(10),
+        out16: sign + magnitude.toString(16).toUpperCase()
+    };
+    Object.entries(outputs).forEach(([id, result]) => {
+        document.getElementById(id).textContent = result;
+    });
+    showMessage("convertMessage", "Hisoblash muvaffaqiyatli bajarildi.");
+}
+
+async function copyBaseResult(id) {
+    const value = document.getElementById(id).textContent;
+    if (!value || value === "—") {
+        showMessage("convertMessage", "Avval sonni hisoblang.");
+        return;
+    }
+    try {
+        await navigator.clipboard.writeText(value);
+        showMessage("convertMessage", "Natija nusxalandi: " + value);
+    } catch {
+        showMessage("convertMessage", "Nusxalash imkoni bo‘lmadi. Natijani qo‘lda belgilang.");
+    }
+}
+
+// Algoritmlar laboratoriyasi
+function runAlgorithm() {
+    const raw = document.getElementById("algorithmInput").value;
+    const parts = raw.split(",").map(x => x.trim());
+    const numbers = parts.map(Number);
+
+    if (!raw.trim() || parts.some(x => x === "") || numbers.some(x => !Number.isFinite(x))) {
+        showMessage("algorithmResult", "Faqat vergul bilan ajratilgan sonlarni kiriting.");
+        return;
+    }
+
+    const type = document.getElementById("algorithmType").value;
+
+    if (type === "sort") {
+        showMessage("algorithmResult", "Saralangan natija: " + [...numbers].sort((a,b) => a-b).join(", "));
+    } else {
+        const target = Number(document.getElementById("searchValue").value);
+        if (!document.getElementById("searchValue").value.trim()) {
+            showMessage("algorithmResult", "Qidiriladigan sonni kiriting.");
+            return;
+        }
+
+        const index = numbers.indexOf(target);
+        showMessage("algorithmResult", index >= 0
+            ? target + " soni " + (index + 1) + "-o‘rinda topildi."
+            : "Bu son ro‘yxatda topilmadi.");
+    }
+}
+
+// Kalkulyator
+async function calculate() {
+    const expression = document.getElementById("calcInput").value.trim();
+
+    try {
+        const response = await fetch("/api/calculate", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({expression})
+        });
+
+        const data = await response.json();
+        showMessage("calcResult", response.ok
+            ? "Natija: " + data.result
+            : data.error);
+    } catch {
+        showMessage("calcResult", "Server bilan bog‘lanib bo‘lmadi.");
+    }
+}
+
+async function loadCalcHistory() {
+    try {
+        const response = await fetch("/api/history");
+        const data = await response.json();
+        if (!response.ok || !data.items || data.items.length === 0) {
+            showMessage("calcResult", "Hozircha hisoblash tarixi bo‘sh.");
+            return;
+        }
+        showMessage("calcResult", data.items.map(item => `${item.expression} = ${item.result}`).join("\n"));
+    } catch {
+        showMessage("calcResult", "Hisoblash tarixini yuklab bo‘lmadi.");
+    }
+}
+
+// O‘quv testi
+async function checkQuiz() {
+    const answer = document.getElementById("quizAnswer").value;
+    if (!answer) {
+        showMessage("quizResult", "Javobni tanlang.");
+        return;
+    }
+    const score = answer === "cpu" ? 1 : 0;
+    showMessage("quizResult", score ? "To‘g‘ri! CPU buyruqlarni bajaradi." : "Bu javob noto‘g‘ri. To‘g‘ri javob: CPU.");
+    try {
+        await fetch("/api/quiz/score", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({score, total: 1})
+        });
+    } catch {
+        showMessage("quizResult", (score ? "To‘g‘ri! " : "Noto‘g‘ri. ") + "Natijani saqlashda server bilan aloqa bo‘lmadi.");
+    }
+}
+
+
+async function loadChatHistory() {
+    const box = document.getElementById("chatHistory");
+    try {
+        const response = await fetch("/api/chat/history");
+        if (!response.ok) throw new Error();
+        const data = await response.json();
+        box.replaceChildren();
+
+        if (!data.items.length) {
+            const p = document.createElement("p");
+            p.textContent = "Hozircha suhbat yo'q. Birinchi savolingizni yuboring!";
+            box.appendChild(p);
+        }
+
+        data.items.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "chat-message " + item.role;
+            const title = document.createElement("strong");
+            title.textContent = item.role === "user" ? "Siz" : "MXMUSO AI";
+            const content = document.createElement("p");
+            content.textContent = item.content;
+            div.append(title, content);
+            box.appendChild(div);
+        });
+        box.scrollTop = box.scrollHeight;
+    } catch {
+        box.textContent = "Chat tarixini yuklab bo'lmadi.";
+    }
+}
+
+async function askAI() {
+    const input = document.getElementById("aiQuestion");
+    const button = document.getElementById("sendAIButton");
+    const question = input.value.trim();
+    if (!question) return;
+
+    button.disabled = true;
+    button.textContent = "Kutilmoqda...";
+
+    try {
+        const response = await fetch("/api/ask", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({question})
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.answer || "AI xatosi");
+        input.value = "";
+        await loadChatHistory();
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        button.disabled = false;
+        button.textContent = "Xabar yuborish";
+    }
+}
+
+async function clearChatHistory() {
+    if (!confirm("Barcha suhbat tarixini tozalaysizmi?")) return;
+    const response = await fetch("/api/chat/history", {method: "DELETE"});
+    if (response.ok) await loadChatHistory();
+    else alert("Tarixni tozalashda xatolik.");
+}
+
+
+const aiInput = document.getElementById("aiQuestion");
+
+if (aiInput) {
+    aiInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            askAI();
+        }
+    });
+}
+
+if (document.getElementById("chatHistory")) loadChatHistory();
+</script>
+</body>
+</html>
